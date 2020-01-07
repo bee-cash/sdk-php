@@ -1,8 +1,8 @@
-### Bee PHP
+# Bee PHP
 
 É uma biblioteca desenvolvida para php com intuito de facilitar a conexão entre os desenvolvedores e a [Bee](https://bee.cash).  
 
-#### Como usar?
+## Como usar?
 
 Para começar a usar a biblioteca, você precisa ter um cadastro na [Bee](https://bee.cash) e gerar o seu token de acesso.  
 
@@ -22,7 +22,7 @@ Pronto nossa biblioteca está conectada com a [Bee](https://bee.cash).
 
 Agora vamos conhecer os metódos disponíveis:
 
-#### altcoin_address_create
+## **_altcoin_address_create_**
 
 Responsável por criar endereços de depósito para altcoins.  
 
@@ -81,7 +81,7 @@ if($endereco['success']){
 }
 ```
 
-#### altcoin_withdrawal_create
+## **_altcoin_withdrawal_create_**
 
 Responsável por realizar saques de altcoins.  
 

@@ -1,4 +1,4 @@
-## Bee Pagamentos PHP
+## Bee PHP
 
 É uma biblioteca desenvolvida para php com intuito de facilitar a conexão entre os desenvolvedores e a [Bee](https://bee.cash).    
 
