@@ -29,9 +29,9 @@ Sua transferência foi criada e se tudo correr bem este será seu retorno:
 		"success": true
 		"result": {
 			"amount": 100
-	    	"coin": "brl"
-	    	"proof": "q1N4-spvY-d0T1-9RQ9"
-	    	"created_at": "2020-01-03T14:31:23.871699Z"
+			"coin": "brl"
+			"proof": "q1N4-spvY-d0T1-9RQ9"
+			"created_at": "2020-01-03T14:31:23.871699Z"
 		}
 	}
 ```  
