@@ -53,31 +53,31 @@ result&#160;&#x2011;>&#160;secret | string | que será enviado junto as notifica
 **1: Criar o endereco**
 ```php
 $endereco = $bee->altcoin_address_create([
-	'coin' => 'btc',
-	'url' => 'https://google.com',
-	'secret' => '4gB6',
-	'label' => 'Endereco BTC'
+   'coin' => 'btc',
+   'url' => 'https://google.com',
+   'secret' => '4gB6',
+   'label' => 'Endereco BTC'
 ]);
 ```
 
 **Retorno:**
 ```json
 {
-	"success": true,
-	"result": {
-	    "address": "18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX",
-	    "coin": "btc",
-	    "label": "Endereco BTC",
-	    "secret": "4gB6",
-	    "url": "https://google.com",
-	}
+   "success": true,
+   "result": {
+      "address": "18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX",
+      "coin": "btc",
+      "label": "Endereco BTC",
+      "secret": "4gB6",
+      "url": "https://google.com",
+   }
 }
 ```
 
 **Utilizando o retorno:**
 ```php
 if($endereco['success']){
-	echo $endereco['result']['address'];
+   echo $endereco['result']['address'];
 }
 ```
 
@@ -116,34 +116,32 @@ result&#160;&#x2011;>&#160;url | string | para envio das notificações de depó
 **1: Criar o saque**
 ```php
 $saque = $bee->altcoin_withdrawal_create([
-	'address' => '18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX',
-	'amount' => 0.01,
-	'coin' => 'btc',
-	'url' => 'https://google.com',
-	'secret' => '15f6b',
-	'label' => 'saque para minha carteira'
+   'address' => '18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX',
+   'amount' => 0.01,
+   'coin' => 'btc',
+   'url' => 'https://google.com',
+   'secret' => '15f6b',
+   'label' => 'saque para minha carteira'
 ]);
 ```
 
 **Retorno:**
 ```json
 {
-	"success": true,
-	"result": {
-		"id": 15,
-	    "address": "18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX",
-	    "amount": 0.01,
-	    "coin": "btc",
-	    "fee": 0.0001,
-	    "secret": "15f6b",
-	    "url": "https://google.com",
-	}
+   "success": true,
+   "result": {
+      "id": 15,
+      "address": "18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX",
+      "fee": 0.0001,
+      "secret": "15f6b",
+      "url": "https://google.com",
+   }
 }
 ```
 
 **Utilizando o retorno:**
 ```php
 if($saque['success']){
-	echo $saque['result']['fee'];
+   echo $saque['result']['fee'];
 }
 ```
