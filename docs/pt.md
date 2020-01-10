@@ -307,7 +307,7 @@ result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#16
 
 #### Exemplo:
 
-**1: Criar o saque**
+**1: Buscar moedas**
 ```php
 $moedas = $bee->list_coins();
 ```
