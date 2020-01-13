@@ -85,13 +85,6 @@ $endereco = $bee->altcoin_address_create([
 }
 ```
 
-**Utilizando o retorno:**
-```php
-if($endereco['success']){
-   echo $endereco['result']['address'];
-}
-```
-
 ## **_altcoin_withdrawal_create_**
 
 Responsável por realizar saques de altcoins.  
@@ -150,13 +143,6 @@ $saque = $bee->altcoin_withdrawal_create([
 }
 ```
 
-**Utilizando o retorno:**
-```php
-if($saque['success']){
-   echo $saque['result']['fee'];
-}
-```
-
 ## **_balance_**
 
 Responsável por buscar o saldo da sua conta.  
@@ -208,13 +194,6 @@ $saldo = $bee->balance('btc');
 }
 ```
 
-**Utilizando o retorno:**
-```php
-if($saldo['success']){
-   echo $saldo['result']['amount'];
-}
-```
-
 #### Exemplo (não informando a moeda[coin]):
 
 **1: Buscar saldo**
@@ -237,33 +216,11 @@ $saldo = $bee->balance();
             "amount": 0.125,
             "blocked": 0,
             "updated_at": "2020-01-03T14:31:23.871699Z"
-         },
-         "doge": {
-            "amount": 1500.58974,
-            "blocked": 2.8457,
-            "updated_at": "2020-01-03T14:31:23.871699Z"
-         },
-         "brl": {
-            "amount": 18.15,
-            "blocked": 1.25,
-            "updated_at": "2020-01-03T14:31:23.871699Z"
          }
       }
    ]
 }
 ```
-
-**Utilizando o retorno:**
-```php
-if($saldo['success']){
-   foreach($saldo['result'] as $moeda){
-      echo $moeda['btc']['amount'];
-      echo $moeda['ltc']['amount'];
-      echo $moeda['doge']['amount'];
-      echo $moeda['brl']['amount'];
-   }
-}
-```  
 
 ## **_coin_list_**
 
@@ -380,84 +337,7 @@ $moedas = $bee->list_coins();
           "withdrawal": 0
         }
       }
-    },
-    {
-      "coin": "ltc",
-      "name": "litecoin",
-      "is_altcoin": true,
-      "places": 8,
-      "fees": {
-        "fixed": {
-          "deposit": 0,
-          "transfer_receipt": 0,
-          "transfer_send": 0,
-          "withdrawal": 0
-        },
-        "percentage": {
-          "deposit": 0,
-          "transfer_receipt": 0,
-          "transfer_send": 0,
-          "withdrawal": 0
-        }
-      },
-      "limits": {
-        "minimum": {
-          "deposit": 0,
-          "transfer": 0,
-          "withdrawal": 0
-        },
-        "maximum": {
-          "deposit": 0,
-          "transfer": 0,
-          "withdrawal": 0
-        }
-      }
-    },
-    {
-      "coin": "doge",
-      "name": "dogecoin",
-      "is_altcoin": true,
-      "places": 8,
-      "fees": {
-        "fixed": {
-          "deposit": 0,
-          "transfer_receipt": 0,
-          "transfer_send": 0,
-          "withdrawal": 0
-        },
-        "percentage": {
-          "deposit": 0,
-          "transfer_receipt": 0,
-          "transfer_send": 0,
-          "withdrawal": 0
-        }
-      },
-      "limits": {
-        "minimum": {
-          "deposit": 0,
-          "transfer": 0,
-          "withdrawal": 0
-        },
-        "maximum": {
-          "deposit": 0,
-          "transfer": 0,
-          "withdrawal": 0
-        }
-      }
     }
   ]
-}
-```
-
-**Utilizando o retorno:**
-```php
-if($moedas['success']){
-   foreach($moedas['result'] as $moeda){
-      echo $moeda['name'];
-      echo $moeda['fees']['fixed']['deposit'];
-      echo $moeda['fees']['percentage']['deposit'];
-      echo $moeda['limits']['minimum']['deposit'];
-      echo $moeda['limits']['maximum']['deposit'];
-   }
 }
 ```
