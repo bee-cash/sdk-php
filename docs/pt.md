@@ -61,7 +61,6 @@ result | array | array com os dados da transação. |
 
 #### Exemplo:
 
-**1: Criar o endereco**
 ```php
 $bee->altcoin_address_create([
    'coin' => 'btc',
@@ -69,20 +68,6 @@ $bee->altcoin_address_create([
    'secret' => '4gB6',
    'label' => 'Endereco BTC'
 ]);
-```
-
-**Retorno:**
-```json
-{
-   "success": true,
-   "result": {
-      "address": "18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX",
-      "coin": "btc",
-      "label": "Endereco BTC",
-      "secret": "4gB6",
-      "url": "https://google.com"
-   }
-}
 ```
 
 ## **_altcoin_withdrawal_create_**
