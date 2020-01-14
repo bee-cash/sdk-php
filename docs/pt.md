@@ -209,7 +209,6 @@ result | array | array com os dados da fatura criada. |
 
 #### Exemplo:
 
-**1: Criar a fatura**
 ```php
 $bee->invoice_create([
    'coin' => 'btc',
