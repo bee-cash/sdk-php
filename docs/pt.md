@@ -65,6 +65,10 @@ $bee->altcoin_address_create([
 ]);
 ```
 
+&#160;  
+&#160;  
+&#160;
+
 ## **_altcoin_withdrawal_create_**
 
 Responsável por realizar saques de altcoins.  
@@ -100,6 +104,10 @@ $bee->altcoin_withdrawal_create([
    'label' => 'saque para minha carteira'
 ]);
 ```
+
+&#160;  
+&#160;  
+&#160;
 
 ## **_balance_**
 
@@ -137,6 +145,10 @@ $bee->balance('btc');
 $bee->balance();
 ```
 
+&#160;  
+&#160;  
+&#160;
+
 ## **_coin_list_**
 
 Responsável por listar todas as moedas aceitas pela [Bee](https://bee.cash).  
@@ -158,6 +170,10 @@ result | array | array com todas as moedas disponíveis. |
 ```php
 $bee->coin_list();
 ```
+
+&#160;  
+&#160;  
+&#160;
 
 ## **_coin_info_**
 
@@ -182,6 +198,10 @@ result | array | array com os dados da moeda. |
 ```php
 $bee->coin_info('btc');
 ```
+
+&#160;  
+&#160;  
+&#160;
 
 ## **_invoice_create_**
 
