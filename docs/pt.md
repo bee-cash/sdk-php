@@ -315,5 +315,5 @@ result | array | array com os dados do usuário. |
 #### Exemplo:
 
 ```php
-$bee->user_info(['nome-de-usuario');
+$bee->user_info('nome-de-usuario');
 ```
