@@ -196,7 +196,7 @@ $bee->coin_info('btc');
 ## **_invoice_create_**
 
 Responsável por criar faturas para pagamento.  
-Geralmente utilizado para que seus clientes façam pagamentos dentro [Bee](https://bee.cash) e seu sistema seja avisado deste pagamento.  
+Geralmente utilizado para que seus clientes façam pagamentos dentro da [Bee](https://bee.cash) e seu sistema seja avisado deste pagamento.  
 **O usuário pode realizar o pagamento de qualquer valor.**  
 
 **Parâmetros**
@@ -227,4 +227,93 @@ $bee->invoice_create([
    'secret' => 'gG53',
    'label' => 'Fatura do meu CRM'
 ]);
+```
+
+&#160;
+
+## **_invoice_pay_**
+
+Responsável por realizar o pagamento de uma fatura.  
+**Qualquer valor pode ser pago, porém algumas faturas possuem um preço sugerido para pagamento.**  
+
+**Parâmetros**
+
+| Campo | Tipo | Obrigatório | Descrição |
+|:------|:-----|:-----------:|:----------|
+| code | string | sim | código da fatura a ser paga. |
+| amount | float | sim | valor do pagamento. |
+
+**Retorno**
+
+Campo | Tipo | Descrição
+:----|:----|:---------
+success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
+errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | array | array com os dados do pagamento. |
+
+#### Exemplo:
+
+```php
+$bee->invoice_pay([
+   'code' => '9B12xcQN',
+   'amount' => 10
+]);
+```
+
+&#160;
+
+## **_transfer_create_**
+
+Responsável por tranferir dinheiro para outro usuário.    
+
+**Parâmetros**
+
+| Campo | Tipo | Obrigatório | Descrição |
+|:------|:-----|:-----------:|:----------|
+| amount | float | sim | valor da transferência. |
+| coin | string | sim | código da moeda a ser transferida. |
+| username | string | sim | nome de usuário a quem deseja tranferir. |
+
+**Retorno**
+
+Campo | Tipo | Descrição
+:----|:----|:---------
+success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
+errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | array | array com os dados da transferência. |
+
+#### Exemplo:
+
+```php
+$bee->transfer_create([
+   'username' => 'nome-de-usuario',
+   'amount' => 100,
+   'coin' => 'brl',
+]);
+```
+
+&#160;
+
+## **_user_info_**
+
+Responsável por buscar informações de um usuário.    
+
+**Parâmetros**
+
+| Campo | Tipo | Obrigatório | Descrição |
+|:------|:-----|:-----------:|:----------|
+| username | string | sim | nome de usuário. |
+
+**Retorno**
+
+Campo | Tipo | Descrição
+:----|:----|:---------
+success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
+errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | array | array com os dados do usuário. |
+
+#### Exemplo:
+
+```php
+$bee->user_info(['nome-de-usuario');
 ```

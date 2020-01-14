@@ -27,27 +27,12 @@ $bee->transfer_create([
 ```  
 
 Simples assim!  
-Sua transferência foi criada e se tudo correr bem este será seu retorno:  
-
-```json
-{
-   "success": true,
-   "result": {
-      "amount": 100,
-      "coin": "brl",
-      "proof": "q1N4-spvY-d0T1-9RQ9",
-      "created_at": "2020-01-03T14:31:23.871699Z"
-   }
-}
-```  
+Sua tranferência foi criada, veja abaixo o retornado desta solicitação.  
 
 Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
+errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
 result | array | array com os dados da transação. |
-result&#160;&#x2011;>&#160;amount | float | valor que foi transferido. |
-result&#160;&#x2011;>&#160;coin | string | moeda utilizada na transferência. |
-result&#160;&#x2011;>&#160;proof | string | comprovante da tranferência, utilizado para localizar a transferência. |
-result&#160;&#x2011;>&#160;created_at | timestamp | data da criação da tranferência.|
 
 ##### Confira a documentação completa [clicando aqui](https://github.com/bee-payments/sdk-php/blob/master/docs/pt.md).
