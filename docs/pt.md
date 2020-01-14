@@ -52,12 +52,7 @@ Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
 errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com os dados da transação. |
-&#160;&#160;&#160;&#160;&#160;&#160;address | string | endereço criado. |
-&#160;&#160;&#160;&#160;&#160;&#160;coin | string | código da moeda relacionada a este endereço. |
-&#160;&#160;&#160;&#160;&#160;&#160;label | string | nome de identificação do endereço. |
-&#160;&#160;&#160;&#160;&#160;&#160;url | string | para envio das notificações de depósito referêntes a este endereço. |
-&#160;&#160;&#160;&#160;&#160;&#160;secret | string | que será enviado junto as notificações para url acima .|
+result | array | array com os dados do endereço criado. |
 
 #### Exemplo:
 
@@ -91,18 +86,10 @@ Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
 errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com os dados da transação. |
-result&#160;&#x2011;>&#160;id | integer | identificador do saque. |
-result&#160;&#x2011;>&#160;address | string | endereço que recebeu o saque. |
-result&#160;&#x2011;>&#160;amount | decimal | valor do saque. |
-result&#160;&#x2011;>&#160;coin | string | código da moeda relacionada a este endereço. |
-result&#160;&#x2011;>&#160;fee | decimal | taxa cobrada pelo saque. |
-result&#160;&#x2011;>&#160;secret | string | que será enviado junto as notificações para url acima .|
-result&#160;&#x2011;>&#160;url | string | para envio das notificações de depósito referêntes a este endereço. |
+result | array | array com os dados da retirada. |
 
 #### Exemplo:
 
-**1: Criar o saque**
 ```php
 $bee->altcoin_withdrawal_create([
    'address' => '18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX',
@@ -112,20 +99,6 @@ $bee->altcoin_withdrawal_create([
    'secret' => '15f6b',
    'label' => 'saque para minha carteira'
 ]);
-```
-
-**Retorno:**
-```json
-{
-   "success": true,
-   "result": {
-      "id": 15,
-      "address": "18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX",
-      "fee": 0.0001,
-      "secret": "15f6b",
-      "url": "https://google.com"
-   }
-}
 ```
 
 ## **_balance_**
@@ -138,73 +111,30 @@ Responsável por buscar o saldo da sua conta.
 |:------|:-----|:-----------:|:----------|
 | coin | string | não | código da moeda na qual você quer buscar o saldo. |
 
-**Retorno (informando a moeda[coin])**
+**Retorno (informando o código da moeda)**
 
 Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
 errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
 result | array | array com o saldo da moeda informada. |
-result&#160;&#x2011;>&#160;amount | float | saldo disponível. |
-result&#160;&#x2011;>&#160;blocked | float | saldo bloqueado. |
-result&#160;&#x2011;>&#160;updated_at | timestamp | data da última atualização. |
 
-**Retorno (não informando a moeda[coin])**
+**Retorno (não informando o código da moeda)**
 
 Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
 errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
 result | array | array com o saldo de todas as moedas disponíveis. |
-result&#160;&#x2011;>&#160;[coin]&#160;&#x2011;>&#160;amount | float | saldo disponível. |
-result&#160;&#x2011;>&#160;[coin]&#160;&#x2011;>&#160;blocked | float | saldo bloqueado. |
-result&#160;&#x2011;>&#160;[coin]&#160;&#x2011;>&#160;updated_at | timestamp | data da última atualização. |
 
-#### Exemplo (informando a moeda[coin]):
+#### Exemplo:
 
-**1: Buscar saldo**
 ```php
 $bee->balance('btc');
 ```
 
-**Retorno:**
-```json
-{
-   "success": true,
-   "result": {
-      "amount": 0.002,
-      "blocked": 0.0005,
-      "updated_at": "2020-01-03T14:31:23.871699Z"
-   }
-}
-```
-
-#### Exemplo (não informando a moeda[coin]):
-
-**1: Buscar saldo**
 ```php
 $bee->balance();
-```
-
-**Retorno:**
-```json
-{
-   "success": true,
-   "result": [
-      {
-         "btc": {
-            "amount": 0.002,
-            "blocked": 0.0005,
-            "updated_at": "2020-01-03T14:31:23.871699Z"
-         },
-         "ltc": {
-            "amount": 0.125,
-            "blocked": 0,
-            "updated_at": "2020-01-03T14:31:23.871699Z"
-         }
-      }
-   ]
-}
 ```
 
 ## **_coin_list_**
@@ -222,109 +152,11 @@ Campo | Tipo | Descrição
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
 errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
 result | array | array com todas as moedas disponíveis. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;coin | string | código da moeda. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;name | string | nome da moeda. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;is_altcoin | boolean | indica se a moeda é uma altcoin. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;places | integer | quantidade de casas decimais, utilizado para formatar números. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;fees | array | array com dados das taxas com valor fixo e/ou porcentagem. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;fixed | array | array com dados da taxa fixa da moeda. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;fixed&#160;&#x2011;>&#160;deposit | float | taxa para depósitos. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;fixed&#160;&#x2011;>&#160;transfer_receipt | float | taxa para transferências recebidas. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;fixed&#160;&#x2011;>&#160;transfer_send | float | taxa para transferências enviadas. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;fixed&#160;&#x2011;>&#160;withdrawal | float | taxa para saques. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;percentage | array | array com dados da taxa fixa da moeda. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;percentage&#160;&#x2011;>&#160;deposit | float | taxa para depósitos. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;percentage&#160;&#x2011;>&#160;transfer_receipt | float | taxa para transferências recebidas. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;percentage&#160;&#x2011;>&#160;transfer_send | float | taxa para transferências enviadas. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;percentage&#160;&#x2011;>&#160;withdrawal | float | taxa para saques. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;limits | array | array com dados dos seus limites. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;minimum | array | array com dados dos limites mínimos. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;minimum&#160;&#x2011;>&#160;deposit | float | limite mínimo para depósito. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;minimum&#160;&#x2011;>&#160;transfer | float | limite mínimo para transferência. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;minimum&#160;&#x2011;>&#160;withdrawal | float | limite mínimo para saque. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;maximum | array | array com dados dos limites mínimos. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;maximum&#160;&#x2011;>&#160;deposit | float | limite máximo para depósito. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;maximum&#160;&#x2011;>&#160;transfer | float | limite máximo para transferência. |
-result&#160;&#x2011;>&#160;[index]&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;maximum&#160;&#x2011;>&#160;withdrawal | float | limite máximo para saque. |
 
 #### Exemplo:
 
-**1: Buscar moedas**
 ```php
-$bee->list_coins();
-```
-
-**Retorno:**
-```json
-{
-  "success": true,
-  "result": [
-    {
-      "coin": "brl",
-      "name": "reais",
-      "is_altcoin": false,
-      "places": 2,
-      "fees": {
-        "fixed": {
-          "deposit": 0,
-          "transfer_receipt": 0,
-          "transfer_send": 0,
-          "withdrawal": 0
-        },
-        "percentage": {
-          "deposit": 0,
-          "transfer_receipt": 0,
-          "transfer_send": 0,
-          "withdrawal": 0
-        }
-      },
-      "limits": {
-        "minimum": {
-          "deposit": 0,
-          "transfer": 0,
-          "withdrawal": 0
-        },
-        "maximum": {
-          "deposit": 0,
-          "transfer": 0,
-          "withdrawal": 0
-        }
-      }
-    },
-    {
-      "coin": "btc",
-      "name": "bitcoin",
-      "is_altcoin": true,
-      "places": 8,
-      "fees": {
-        "fixed": {
-          "deposit": 0,
-          "transfer_receipt": 0,
-          "transfer_send": 0,
-          "withdrawal": 0
-        },
-        "percentage": {
-          "deposit": 0,
-          "transfer_receipt": 0,
-          "transfer_send": 0,
-          "withdrawal": 0
-        }
-      },
-      "limits": {
-        "minimum": {
-          "deposit": 0,
-          "transfer": 0,
-          "withdrawal": 0
-        },
-        "maximum": {
-          "deposit": 0,
-          "transfer": 0,
-          "withdrawal": 0
-        }
-      }
-    }
-  ]
-}
+$bee->coin_list();
 ```
 
 ## **_coin_info_**
@@ -344,75 +176,11 @@ Campo | Tipo | Descrição
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
 errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
 result | array | array com os dados da moeda. |
-result&#160;&#x2011;>&#160;coin | string | código da moeda. |
-result&#160;&#x2011;>&#160;name | string | nome da moeda. |
-result&#160;&#x2011;>&#160;is_altcoin | boolean | indica se a moeda é uma altcoin. |
-result&#160;&#x2011;>&#160;places | integer | quantidade de casas decimais, utilizado para formatar números. |
-result&#160;&#x2011;>&#160;fees | array | array com dados das taxas com valor fixo e/ou porcentagem. |
-result&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;fixed | array | array com dados da taxa fixa da moeda. |
-result&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;fixed&#160;&#x2011;>&#160;deposit | float | taxa para depósitos. |
-result&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;fixed&#160;&#x2011;>&#160;transfer_receipt | float | taxa para transferências recebidas. |
-result&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;fixed&#160;&#x2011;>&#160;transfer_send | float | taxa para transferências enviadas. |
-result&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;fixed&#160;&#x2011;>&#160;withdrawal | float | taxa para saques. |
-result&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;percentage | array | array com dados da taxa fixa da moeda. |
-result&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;percentage&#160;&#x2011;>&#160;deposit | float | taxa para depósitos. |
-result&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;percentage&#160;&#x2011;>&#160;transfer_receipt | float | taxa para transferências recebidas. |
-result&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;percentage&#160;&#x2011;>&#160;transfer_send | float | taxa para transferências enviadas. |
-result&#160;&#x2011;>&#160;fees&#160;&#x2011;>&#160;percentage&#160;&#x2011;>&#160;withdrawal | float | taxa para saques. |
-result&#160;&#x2011;>&#160;limits | array | array com dados dos seus limites. |
-result&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;minimum | array | array com dados dos limites mínimos. |
-result&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;minimum&#160;&#x2011;>&#160;deposit | float | limite mínimo para depósito. |
-result&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;minimum&#160;&#x2011;>&#160;transfer | float | limite mínimo para transferência. |
-result&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;minimum&#160;&#x2011;>&#160;withdrawal | float | limite mínimo para saque. |
-result&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;maximum | array | array com dados dos limites mínimos. |
-result&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;maximum&#160;&#x2011;>&#160;deposit | float | limite máximo para depósito. |
-result&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;maximum&#160;&#x2011;>&#160;transfer | float | limite máximo para transferência. |
-result&#160;&#x2011;>&#160;limits&#160;&#x2011;>&#160;maximum&#160;&#x2011;>&#160;withdrawal | float | limite máximo para saque. |
 
 #### Exemplo:
 
-**1: Buscar informações**
 ```php
 $bee->coin_info('btc');
-```
-
-**Retorno:**
-```json
-{
-   "success": true,
-   "result": {
-      "coin": "btc",
-      "name": "bitcoin",
-      "is_altcoin": true,
-      "places": 8,
-      "fees": {
-         "fixed": {
-            "deposit": 0,
-            "transfer_receipt": 0,
-            "transfer_send": 0,
-            "withdrawal": 0
-         },
-         "percentage": {
-            "deposit": 0,
-            "transfer_receipt": 0,
-            "transfer_send": 0,
-            "withdrawal": 0
-         }
-      },
-      "limits": {
-            "minimum": {
-            "deposit": 0,
-            "transfer": 0,
-            "withdrawal": 0
-         },
-            "maximum": {
-            "deposit": 0,
-            "transfer": 0,
-            "withdrawal": 0
-         }
-      }
-   }
-}
 ```
 
 ## **_invoice_create_**
@@ -437,12 +205,7 @@ Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
 errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com os dados da transação. |
-result&#160;&#x2011;>&#160;code | string | código de identificação da fatura. |
-result&#160;&#x2011;>&#160;coin | string | código da moeda relacionada a esta fatura. |
-result&#160;&#x2011;>&#160;amount | float | valor sugerido para pagamento. |
-result&#160;&#x2011;>&#160;url | string | para envio das notificações de depósito referêntes a este endereço. |
-result&#160;&#x2011;>&#160;secret | string | que será enviado junto as notificações para url acima .|
+result | array | array com os dados da fatura criada. |
 
 #### Exemplo:
 
@@ -455,74 +218,4 @@ $bee->invoice_create([
    'secret' => 'gG53',
    'label' => 'Fatura do meu CRM'
 ]);
-```
-
-**Retorno:**
-```json
-{
-   "success": true,
-   "result": {
-      "coin": "btc",
-      "code": "N6P331cm",
-      "secret": "gG53",
-      "amount": 100,
-      "url": "https://google.com"
-   }
-}
-```
-
-## **_invoice_view_**
-
-Responsável por vizualizar detalhes de uma fatura paga.  
-Geralmente utilizado para que seus clientes façam pagamentos dentro [Bee](https://bee.cash) e seu sistema seja avisado deste pagamento.  
-**O usuário pode realizar o pagamento de qualquer valor.**  
-
-**Parâmetros**
-
-| Campo | Tipo | Obrigatório | Descrição |
-|:------|:-----|:-----------:|:----------|
-| proof | string | sim | código do compro. |
-| amount | float | não | valor sugerido para pagamento desta fatura. |
-| url | string | não | url para envio das notificações de depósito referêntes a esta fatura. |
-| secret | string | não | código secreto que será enviado junto as notificações para url acima. |
-| label | string | não | nome de identificação da fatura. |
-
-**Retorno**
-
-Campo | Tipo | Descrição
-:----|:----|:---------
-success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
-errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com os dados da transação. |
-result&#160;&#x2011;>&#160;code | string | código de identificação da fatura. |
-result&#160;&#x2011;>&#160;coin | string | código da moeda relacionada a esta fatura. |
-result&#160;&#x2011;>&#160;amount | float | valor sugerido para pagamento. |
-result&#160;&#x2011;>&#160;url | string | para envio das notificações de depósito referêntes a este endereço. |
-result&#160;&#x2011;>&#160;secret | string | que será enviado junto as notificações para url acima .|
-
-#### Exemplo:
-
-**1: Criar a fatura**
-```php
-$bee->invoice_create([
-   'coin' => 'btc',
-   'amount' => 100,
-   'url' => 'https://google.com',
-   'secret' => 'gG53',
-   'label' => 'Fatura do meu CRM'
-]);
-```
-
-**Retorno:**
-```json
-{
-   "success": true,
-   "result": {
-      "coin": "btc",
-      "code": "N6P331cm",
-      "secret": "gG53",
-      "amount": 100,
-      "url": "https://google.com"
-   }
-}
 ```
