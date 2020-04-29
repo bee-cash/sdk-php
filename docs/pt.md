@@ -1,4 +1,4 @@
-# Bee PHP
+# Bee SDK PHP
 
 É uma biblioteca desenvolvida para php com intuito de facilitar a conexão entre os desenvolvedores e a [Bee](https://bee.cash).  
 
@@ -42,9 +42,9 @@ Responsável por criar endereços de depósito para altcoins.
 | Campo | Tipo | Obrigatório | Descrição |
 |:------|:-----|:-----------:|:----------|
 | coin | string | sim | código da moeda na qual o endereço deve ser gerado. |
-| url | string | não | url para envio das notificações de depósito referêntes a este endereço. |
-| secret | string | não | código secreto que será enviado junto as notificações para url acima. |
-| label | string | não | nome de identificação do endereço. |
+| notification_url | string | não | url para envio das notificações de depósito referêntes a este endereço. |
+| reference | string | não | informe algo que sirva de referencia pra você. |
+| label | string | não | descrição de identificação do endereço. |
 
 **Retorno**
 
@@ -59,8 +59,6 @@ result | array | array com os dados do endereço criado. |
 ```php
 $bee->altcoin_address_create([
    'coin' => 'btc',
-   'url' => 'https://google.com',
-   'secret' => '4gB6',
    'label' => 'Endereco BTC'
 ]);
 ```
@@ -78,9 +76,9 @@ Responsável por realizar saques de altcoins.
 | address | string | sim | endereço para onde será enviado o saque. |
 | amount | decimal | sim | valor do saque. |
 | coin | string | sim | código da moeda na qual o endereço deve ser gerado. |
-| url | string | não | url para envio das notificações desta retirada. |
-| secret | string | não | código secreto que será enviado junto as notificações para url acima. |
-| label | string | não | nome de identificação da retirada. |
+| notification_url | string | não | url para envio das notificações desta retirada. |
+| reference | string | não | informe algo que sirva de referencia pra você. |
+| label | string | não | descrição de identificação da retirada. |
 
 **Retorno**
 
@@ -97,8 +95,6 @@ $bee->altcoin_withdrawal_create([
    'address' => '18cBEMRxXHqzWWCxZNtU91F5sbUNKhL5PX',
    'amount' => 0.01,
    'coin' => 'btc',
-   'url' => 'https://google.com',
-   'secret' => '15f6b',
    'label' => 'saque para minha carteira'
 ]);
 ```
@@ -132,6 +128,7 @@ errors | array | erros ocorridos durante a solicitação. este campo só existir
 result | array | array com o saldo de todas as moedas disponíveis. |
 
 #### Exemplo:
+
 
 ```php
 $bee->balance('btc');
@@ -193,20 +190,26 @@ $bee->coin_info('btc');
 
 &#160;
 
-## **_invoice_create_**
+## **_charge_boleto_create_**
 
-Responsável por criar faturas para pagamento.  
-Geralmente utilizado para que seus clientes façam pagamentos dentro da [Bee](https://bee.cash) e seu sistema seja avisado deste pagamento.  
-**O usuário pode realizar o pagamento de qualquer valor.**  
+Responsável por criar de cobrança.  
+Geralmente utilizado para que seus clientes façam pagamentos dentro da [Bee](https://bee.cash) e seu sistema seja avisado deste pagamento. 
 
 **Parâmetros**
 
 | Campo | Tipo | Obrigatório | Descrição |
 |:------|:-----|:-----------:|:----------|
-| coin | string | sim | código da moeda na qual a fatura deve ser gerada. |
-| amount | float | não | valor sugerido para pagamento desta fatura. |
-| url | string | não | url para envio das notificações de depósito referêntes a esta fatura. |
-| secret | string | não | código secreto que será enviado junto as notificações para url acima. |
+| coin | string | não | código da moeda na qual a cobrança deve ser gerada, se não enviar, vamos considerar **brl**. |
+| amount | float | sim | valor do boleto. |
+| client_id | int | sim | informe o id do cliente titular da cobrança |
+| due_at | date | sim | data de vecimento do boleto. |
+| notification_url | string | não | url para envio das notificações de depósito referêntes a este boleto. |
+| reference | string | não | informe algo que sirva de referencia pra você. |
+| installments | int | não | quantidade de parcelas. |
+| recurrence_interval | int | não | intervalo de recorrência em meses para gerar o boleto. |
+| interest | float | não | percentual de juros ao mês sobre o valor da cobrança para pagamento após o vencimento. |
+| fine | float | não | percentual de multa sobre o valor da cobrança para pagamento após o vencimento. | 
+| send_by_email | bool | não | informe **true**, pra gente enviar o boleto por email ou **false** para não enviar.
 | label | string | não | nome de identificação da fatura. |
 
 **Retorno**
@@ -220,28 +223,35 @@ result | array | array com os dados da fatura criada. |
 #### Exemplo:
 
 ```php
-$bee->invoice_create([
-   'coin' => 'btc',
-   'amount' => 100,
-   'url' => 'https://google.com',
-   'secret' => 'gG53',
-   'label' => 'Fatura do meu CRM'
+$bee->charge_boleto_create([
+   'amount' => 59.99,
+   'client_id' => 5,
+   'due_at' => '2020-04-29',
+   'label' => 'Cobrança referente a compra de tenis sport'
 ]);
 ```
 
 &#160;
 
-## **_invoice_pay_**
+## **_charge_client_create_**
 
-Responsável por realizar o pagamento de uma fatura.  
-**Qualquer valor pode ser pago, porém algumas faturas possuem um preço sugerido para pagamento.**  
+Responsável por criar um cliente para cobranças.
 
 **Parâmetros**
 
 | Campo | Tipo | Obrigatório | Descrição |
 |:------|:-----|:-----------:|:----------|
-| code | string | sim | código da fatura a ser paga. |
-| amount | float | sim | valor do pagamento. |
+| name | string | sim | nome completo do cliente. |
+| documento | string | sim | cpf/cnpj do cliente, pode ser informado com o sem máscara. |
+| email | string | sim | email do cliente |
+| address.neighborhood | string | sim | bairro do cliente. |
+| address.street | string | sim | rua/avenida do cliente. |
+| address.zip_code | string | sim | cep do cliente, pode ser com ou sem máscara. |
+| address.number | int | não | número da residencia do cliente. |
+| address.complement | string | não | complemento, por ex: casa, lote, bloco. |
+| phone.number | string | sim | número de telefone, pode ser com ou sem máscara. |
+| phone.label | string | não | breve descrição, por ex: celular pessoal. |
+| phone.is_whatsapp | bool | não | informe **true** se for whatsapp ou **false** se não for. |
 
 **Retorno**
 
@@ -254,9 +264,18 @@ result | array | array com os dados do pagamento. |
 #### Exemplo:
 
 ```php
-$bee->invoice_pay([
-   'code' => '9B12xcQN',
-   'amount' => 10
+$bee->charge_client_create([
+   'name' => 'João Silva',
+   'document' => '123.456.789-10',
+   'email' => 'joao_silva@provedor.com',
+   'address' => [
+        'neighborhood' => 'setor balneário',
+        'street' => 'av. nerópolis',
+        'zip_code' => '74590-510',
+   ],
+   'phone' => [
+        'number' => '(12) 23456-7891'
+   ]
 ]);
 ```
 
@@ -273,6 +292,7 @@ Responsável por tranferir dinheiro para outro usuário.
 | amount | float | sim | valor da transferência. |
 | coin | string | sim | código da moeda a ser transferida. |
 | username | string | sim | nome de usuário a quem deseja tranferir. |
+| label | string | não | descrição sobre essa transferência, ex: pagamento de lanche. |
 
 **Retorno**
 
@@ -292,28 +312,3 @@ $bee->transfer_create([
 ]);
 ```
 
-&#160;
-
-## **_user_info_**
-
-Responsável por buscar informações de um usuário.    
-
-**Parâmetros**
-
-| Campo | Tipo | Obrigatório | Descrição |
-|:------|:-----|:-----------:|:----------|
-| username | string | sim | nome de usuário. |
-
-**Retorno**
-
-Campo | Tipo | Descrição
-:----|:----|:---------
-success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
-errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com os dados do usuário. |
-
-#### Exemplo:
-
-```php
-$bee->user_info('nome-de-usuario');
-```

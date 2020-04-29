@@ -44,6 +44,16 @@ class Bee
         return $this->execute('balance', ['coin' => $coin]);
     }
 
+    public function charge_boleto_create($array = [])
+    {
+        return $this->execute('charge/boleto/create', $array);
+    }
+
+    public function charge_client_create($array = [])
+    {
+        return $this->execute('charge/client/create', $array);
+    }
+
     public function coin_list()
     {
         return $this->execute('coin/list');
@@ -54,28 +64,8 @@ class Bee
         return $this->execute('coin/info', ['coin' => $coin]);
     }
 
-    public function invoice_create($array = [])
-    {
-        return $this->execute('invoice/create', $array);
-    }
-
-    public function invoice_pay($array = [])
-    {
-        return $this->execute('invoice/pay', $array);
-    }
-
-    public function invoice_view($array = [])
-    {
-        return $this->execute('invoice/view', $array);
-    }
-
     public function transfer_create($array = [])
     {
         return $this->execute('transfer/create', $array);
-    }
-
-    public function user_info($username = '')
-    {
-        return $this->execute('user/info', ['username' => $username]);
     }
 }
