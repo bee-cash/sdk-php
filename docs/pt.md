@@ -74,7 +74,7 @@ Responsável por realizar saques de altcoins.
 | Campo | Tipo | Obrigatório | Descrição |
 |:------|:-----|:-----------:|:----------|
 | address | string | sim | endereço para onde será enviado o saque. |
-| amount | decimal | sim | valor do saque. |
+| amount | float | sim | valor do saque. |
 | coin | string | sim | código da moeda na qual o endereço deve ser gerado. |
 | notification_url | string | não | url para envio das notificações desta retirada. |
 | reference | string | não | informe algo que sirva de referencia pra você. |
