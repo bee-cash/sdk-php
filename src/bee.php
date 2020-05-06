@@ -19,10 +19,11 @@ class Bee
     private function execute($end_point, $array)
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->url.$end_point.'?'.http_build_query($array));
+        curl_setopt($ch, CURLOPT_URL, $this->url.$end_point);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($array));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
         curl_close($ch);
