@@ -49,6 +49,11 @@ class Bee
         return $this->execute('charge/boleto/create', $array);
     }
 
+    public function charge_boleto_receive_in_cash($boleto_id)
+    {
+        return $this->execute('charge/boleto/receive-in-cash', ['boleto_id' => $boleto_id]);
+    }
+
     public function charge_client_create($array = [])
     {
         return $this->execute('charge/client/create', $array);
