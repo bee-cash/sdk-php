@@ -44,6 +44,11 @@ class Bee
         return $this->execute('balance', ['coin' => $coin]);
     }
 
+    public function bank_deposit_boleto_create($array)
+    {
+        return $this->execute('bank/deposit/boleto/create', $array);
+    }
+
     public function charge_boleto_create($array = [])
     {
         return $this->execute('charge/boleto/create', $array);
