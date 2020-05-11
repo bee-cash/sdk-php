@@ -140,6 +140,38 @@ $bee->balance();
 
 &#160;
 
+## **_bank_deposit_boleto_create_**
+
+Responsável por criar um boleto de depósito.  
+Nessa modalidade você pode criar boletos sem precisar cadastrar um cliente, observe que nessa requisição, você sempre será o sacado do boleto. 
+
+**Parâmetros**
+
+| Campo | Tipo | Obrigatório | Descrição |
+|:------|:-----|:-----------:|:----------|
+| coin | string | não | código da moeda na qual a cobrança deve ser gerada, se não enviar, vamos considerar **brl**. |
+| amount | float | sim | valor do boleto. |
+| due_at | date | sim | data de vecimento do boleto. |
+
+**Retorno**
+
+Campo | Tipo | Descrição
+:----|:----|:---------
+success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
+errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+result | array | array com os dados do boleto de depósito criado. |
+
+#### Exemplo:
+
+```php
+$bee->bank_deposit_boleto_create([
+   'amount' => 59.99,
+   'due_at' => '2020-04-29',
+]);
+```
+
+&#160;
+
 ## **_coin_list_**
 
 Responsável por listar todas as moedas aceitas pela [Bee](https://bee.cash).  
@@ -218,7 +250,7 @@ Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
 errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com os dados da fatura criada. |
+result | array | array com os dados do boleto criado. |
 
 #### Exemplo:
 
@@ -229,6 +261,31 @@ $bee->charge_boleto_create([
    'due_at' => '2020-04-29',
    'label' => 'Cobrança referente a compra de tenis sport'
 ]);
+```
+
+&#160;
+
+## **_charge_boleto_receive_in_cash_**
+
+Responsável por marcar o boleto como recebido em dinheiro.  
+
+**Parâmetros**
+
+| Campo | Tipo | Obrigatório | Descrição |
+|:------|:-----|:-----------:|:----------|
+| boleto_id | int | sim | id do boleto a ser recebido |
+
+**Retorno**
+
+Campo | Tipo | Descrição
+:----|:----|:---------
+success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
+errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
+
+#### Exemplo:
+
+```php
+$bee->charge_boleto_receive_in_cash($boleto_id);
 ```
 
 &#160;
@@ -259,7 +316,7 @@ Campo | Tipo | Descrição
 :----|:----|:---------
 success | boolean  | **true** em caso de sucesso  **false** em caso de falha. |
 errors | array | erros ocorridos durante a solicitação. este campo só existirá caso success seja **false**. |
-result | array | array com os dados do pagamento. |
+result | array | array com os dados do cliente. |
 
 #### Exemplo:
 
