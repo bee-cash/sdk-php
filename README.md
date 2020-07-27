@@ -19,7 +19,7 @@ $bee = new Bee('seu-token');
 **3: Crie uma tranferência**
 
 ```php
-$bee->transfer_create([
+$bee->transfer([
    'username' => 'usuario-destino', // Usuário da Bee Pagamentos
    'amount' => 100, // Valor a ser transferido
    'coin' => 'brl', // Moeda que deseja transferir

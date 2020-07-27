@@ -16,66 +16,70 @@ class Bee
         ];
     }
 
-    private function execute($end_point, $array)
+    private function execute($end_point, $array, $method = 'post')
     {
+        $method = strtoupper($method);
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->url.$end_point);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headers);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($array));
+        if ($method == 'POST') {
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($array));
+        } elseif ($method != 'GET') {
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($array));
+        }
+        
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
+        var_dump($this->url.$end_point);
         curl_close($ch);
         return json_decode($response, true);
     }
 
-    public function altcoin_address_create($array = [])
+    public function altcoin_address($array = [])
     {
-        return $this->execute('altcoin/address/create', $array);
+        return $this->execute('altcoin/address', $array);
     }
 
-    public function altcoin_withdrawal_create($array = [])
+    public function altcoin_withdrawal($array = [])
     {
-        return $this->execute('altcoin/withdrawal/create', $array);
+        return $this->execute('altcoin/withdrawal', $array);
     }
 
     public function balance($coin = '')
     {
-        return $this->execute('balance', ['coin' => $coin]);
+        return $this->execute('balance/'.$coin, [], 'get');
     }
 
-    public function bank_deposit_boleto_create($array)
+    public function bank_deposit_boleto($array)
     {
-        return $this->execute('bank/deposit/boleto/create', $array);
+        return $this->execute('bank/deposit/boleto', $array);
     }
 
-    public function charge_boleto_create($array = [])
+    public function charge_boleto($array = [])
     {
-        return $this->execute('charge/boleto/create', $array);
+        return $this->execute('charge/boleto', $array);
     }
 
     public function charge_boleto_receive_in_cash($boleto_id)
     {
-        return $this->execute('charge/boleto/receive-in-cash', ['boleto_id' => $boleto_id]);
+        return $this->execute('charge/boleto/'.$boleto_id.'/receive-in-cash');
     }
 
-    public function charge_client_create($array = [])
+    public function charge_client($array = [])
     {
-        return $this->execute('charge/client/create', $array);
+        return $this->execute('charge/client', $array);
     }
 
-    public function coin_list()
+    public function coin($coin = '')
     {
-        return $this->execute('coin/list');
+        return $this->execute('coin/'.$coin, [], 'get');
     }
 
-    public function coin_info($coin = '')
+    public function transfer($array = [])
     {
-        return $this->execute('coin/info', ['coin' => $coin]);
-    }
-
-    public function transfer_create($array = [])
-    {
-        return $this->execute('transfer/create', $array);
+        return $this->execute('transfer', $array);
     }
 }
